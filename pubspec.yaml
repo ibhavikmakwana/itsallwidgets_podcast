@@ -16,9 +16,8 @@ dependencies:
   flutter:
     sdk: flutter
   http:
-  webfeed:
   xml2json:
-
+  audioplayer:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
