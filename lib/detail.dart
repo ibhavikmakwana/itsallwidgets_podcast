@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:audioplayer/audioplayer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:itsallwidgets_podcast/rss_response.dart';
+import 'package:itsallwidgets_podcast/data/rss_response.dart';
 
 enum PlayerState { stopped, playing, paused }
 
@@ -169,58 +169,69 @@ class PodCastDetailState extends State<PodCastDetail> {
   }
 
   Widget _buildPlayer() => Container(
-      padding: EdgeInsets.all(16.0),
-      child: Column(mainAxisSize: MainAxisSize.min, children: [
-        Row(mainAxisSize: MainAxisSize.min, children: [
-          IconButton(
-              onPressed: isPlaying ? null : () => play(),
-              iconSize: 48.0,
-              icon: Icon(Icons.play_arrow),
-              color: Colors.blue),
-          IconButton(
-              onPressed: isPlaying ? () => pause() : null,
-              iconSize: 48.0,
-              icon: Icon(Icons.pause),
-              color: Colors.blue),
-          IconButton(
-              onPressed: isPlaying || isPaused ? () => stop() : null,
-              iconSize: 48.0,
-              icon: Icon(Icons.stop),
-              color: Colors.blue),
-          IconButton(
-              onPressed: () => mute(!isMuted),
-              iconSize: 48.0,
-              icon: Icon(isMuted ? Icons.volume_off : Icons.volume_up),
-              color: Colors.blue),
-        ]),
-        duration == null
-            ? Container()
-            : Slider(
-                value: position?.inMilliseconds?.toDouble() ?? 0.0,
-                onChanged: (double value) =>
-                    audioPlayer.seek((value / 1000).roundToDouble()),
-                min: 0.0,
-                max: duration.inMilliseconds.toDouble()),
-        Row(mainAxisSize: MainAxisSize.min, children: [
-          Padding(
-              padding: EdgeInsets.all(12.0),
-              child: Stack(children: [
-                CircularProgressIndicator(
-                    value: 1.0,
-                    valueColor: AlwaysStoppedAnimation(Colors.grey[300])),
-                CircularProgressIndicator(
-                  value: position != null && position.inMilliseconds > 0
-                      ? (position?.inMilliseconds?.toDouble() ?? 0.0) /
-                          (duration?.inMilliseconds?.toDouble() ?? 0.0)
-                      : 0.0,
-                  valueColor: AlwaysStoppedAnimation(Colors.blue),
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(mainAxisSize: MainAxisSize.min, children: [
+              IconButton(
+                  onPressed: isPlaying ? null : () => play(),
+                  iconSize: 48.0,
+                  icon: Icon(Icons.play_arrow),
+                  color: Colors.blue),
+              IconButton(
+                  onPressed: isPlaying ? () => pause() : null,
+                  iconSize: 48.0,
+                  icon: Icon(Icons.pause),
+                  color: Colors.blue),
+              IconButton(
+                  onPressed: isPlaying || isPaused ? () => stop() : null,
+                  iconSize: 48.0,
+                  icon: Icon(Icons.stop),
+                  color: Colors.blue),
+              IconButton(
+                  onPressed: () => mute(!isMuted),
+                  iconSize: 48.0,
+                  icon: Icon(isMuted ? Icons.volume_off : Icons.volume_up),
+                  color: Colors.blue),
+            ]),
+            duration == null
+                ? Container()
+                : Slider(
+                    value: position?.inMilliseconds?.toDouble() ?? 0.0,
+                    onChanged: (double value) =>
+                        audioPlayer.seek((value / 1000).roundToDouble()),
+                    min: 0.0,
+                    max: duration.inMilliseconds.toDouble()),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(12.0),
+                  child: Stack(
+                    children: [
+                      CircularProgressIndicator(
+                          value: 1.0,
+                          valueColor: AlwaysStoppedAnimation(Colors.grey[300])),
+                      CircularProgressIndicator(
+                        value: position != null && position.inMilliseconds > 0
+                            ? (position?.inMilliseconds?.toDouble() ?? 0.0) /
+                                (duration?.inMilliseconds?.toDouble() ?? 0.0)
+                            : 0.0,
+                        valueColor: AlwaysStoppedAnimation(Colors.blue),
+                      ),
+                    ],
+                  ),
                 ),
-              ])),
-          Text(
-              position != null
-                  ? "${positionText ?? ''} / ${durationText ?? ''}"
-                  : duration != null ? durationText : '',
-              style: TextStyle(fontSize: 24.0))
-        ])
-      ]));
+                Text(
+                  position != null
+                      ? "${positionText ?? ''} / ${durationText ?? ''}"
+                      : duration != null ? durationText : '',
+                  style: TextStyle(fontSize: 24.0),
+                ),
+              ],
+            ),
+          ],
+        ),
+      );
 }
