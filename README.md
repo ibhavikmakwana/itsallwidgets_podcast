@@ -7,6 +7,12 @@ Listen to all the latest podcast.
 
 Get Android version from [here](https://drive.google.com/file/d/1nyJNoEWOZ9afDJjsoKlL9UYy9gB3ELvu/view).
 
+# Preview
+
+| Podcast list | Detail |
+| ------------------ | --------------------------- | ------------------ |
+| <img src="./preview/list.png" width="200" alt="Screenshot"/>  | <img src="./preview/detail.png" width="200" alt="Screenshot"/> |
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
