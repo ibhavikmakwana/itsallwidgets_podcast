@@ -1,16 +1,24 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:itsallwidgets_podcast/bloc/podcast_bloc.dart';
 import 'package:itsallwidgets_podcast/data/rss_response.dart';
 import 'package:itsallwidgets_podcast/detail.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PodCastList extends StatelessWidget {
+//  final recognizer = TapGestureRecognizer()
+//    ..onTap = () {
+//      _launchURL();
+//    };
 
-  final recognizer = TapGestureRecognizer()
-    ..onTap = () {
-      print("You have tapped Hillel");
-    };
+  _launchURL() async {
+    const url = 'https://twitter.com/hillelcoren';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +107,7 @@ class PodCastList extends StatelessWidget {
 
   Padding buildTitleWidget(AsyncSnapshot<RssResponse> snapshot) {
     return Padding(
-      padding: EdgeInsets.only(left: 16, right: 16, top: 32, bottom: 8),
+      padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
       child: Text(
         snapshot.data.feed.title,
         style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
@@ -124,7 +132,6 @@ class PodCastList extends StatelessWidget {
               ),
             ),
             TextSpan(
-              recognizer: recognizer,
               text: author,
               style: TextStyle(
                 fontWeight: FontWeight.w900,
