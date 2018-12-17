@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:itsallwidgets_podcast/data/rss_response.dart';
 
 
-class PodCastProvider {
+class PCProvider {
   Future<RssResponse> fetchPodCast() async {
     final response = await http.get(
         'https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fitsallwidgets.com%2Fpodcast%2Ffeed');
