@@ -10,7 +10,7 @@ Get Android version from [here](https://drive.google.com/file/d/1nyJNoEWOZ9afDJj
 # Preview
 
 | Podcast list | Detail |
-| ------------------ | --------------------------- | ------------------ |
+| ------------------ | --------------------------- |
 | <img src="./preview/list.png" width="200" alt="Screenshot"/>  | <img src="./preview/detail.png" width="200" alt="Screenshot"/> |
 
 ## Getting Started
