@@ -1,6 +1,8 @@
-# itsallwidgets_podcast
+# It's all widgets podcast app
 
 A new Flutter application.
+
+Get Android version from [here](https://drive.google.com/file/d/1nyJNoEWOZ9afDJjsoKlL9UYy9gB3ELvu/view).
 
 ## Getting Started
 
