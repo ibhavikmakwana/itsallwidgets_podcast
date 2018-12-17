@@ -15,42 +15,44 @@ class PodCastList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bloc.fetchAllPodCast();
-    return Scaffold(
-      body: StreamBuilder(
-        stream: bloc.allPodCast,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  buildTitleWidget(snapshot),
-                  buildBlueDivider(),
-                  textAuthorSpan(snapshot.data.feed.author),
-                  Container(
-                    margin: EdgeInsets.only(left: 16, right: 16, bottom: 8),
-                    child: Text(
-                      snapshot.data.feed.description,
-                      style: TextStyle(fontSize: 16.0),
+    return SafeArea(
+      child: Scaffold(
+        body: StreamBuilder(
+          stream: bloc.allPodCast,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    buildTitleWidget(snapshot),
+                    buildBlueDivider(),
+                    textAuthorSpan(snapshot.data.feed.author),
+                    Container(
+                      margin: EdgeInsets.only(left: 16, right: 16, bottom: 8),
+                      child: Text(
+                        snapshot.data.feed.description,
+                        style: TextStyle(fontSize: 16.0),
+                      ),
                     ),
-                  ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return buildListViewItem(snapshot, index, context);
-                    },
-                    itemCount: snapshot.data.items.length,
-                  ),
-                ],
-              ),
-            );
-          } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
-          }
-          return Center(child: CircularProgressIndicator());
-        },
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return buildListViewItem(snapshot, index, context);
+                      },
+                      itemCount: snapshot.data.items.length,
+                    ),
+                  ],
+                ),
+              );
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
+            }
+            return Center(child: CircularProgressIndicator());
+          },
+        ),
       ),
     );
   }
@@ -97,7 +99,7 @@ class PodCastList extends StatelessWidget {
 
   Padding buildTitleWidget(AsyncSnapshot<RssResponse> snapshot) {
     return Padding(
-      padding: EdgeInsets.only(left: 16, right: 16, top: 16, bottom: 8),
+      padding: EdgeInsets.only(left: 16, right: 16, top: 32, bottom: 8),
       child: Text(
         snapshot.data.feed.title,
         style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold),
