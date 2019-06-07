@@ -4,6 +4,9 @@ import 'package:audioplayer/audioplayer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:itsallwidgets_podcast/data/rss_response.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:verbal_expressions/verbal_expressions.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 
 enum PlayerState { stopped, playing, paused }
 
@@ -151,7 +154,11 @@ class PodCastDetailState extends State<PodCastDetail> {
                   widget.item.description,
                   style: TextStyle(fontSize: 16.0),
                 ),
-              )
+              ),
+              Padding(
+                padding: EdgeInsets.all(2.0),
+                child: displayUrls(widget.item.description),
+              ),
             ],
           ),
         ),
@@ -234,4 +241,43 @@ class PodCastDetailState extends State<PodCastDetail> {
           ],
         ),
       );
+
+  Widget displayUrls(String description) {
+    var regex = VerbalExpression()
+      ..startOfLine()
+      ..then("https")
+      ..then("://")
+      ..anythingBut(" ")
+      ..endOfLine();
+
+    // Create an example URL
+    String url = description;
+
+    // Use VerbalExpression's hasMatch() method to test if the entire string matches the regex
+    regex.hasMatch(url); //True
+
+    regex.toString();
+
+    final urlRegex = RegExp('https\:\/\/(?:[^\#,]*)', multiLine: true);
+    var urlToDisplay =
+        (urlRegex.allMatches(description).map((m) => m.group(0)));
+
+    for (var n in urlToDisplay) {
+      return Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Linkify(
+              onOpen: (url) async {
+                if (await canLaunch(url)) {
+                  await launch(url);
+                } else {
+                  throw 'Could not launch $url';
+                }
+              },
+              text: '\n${urlToDisplay}\n',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16.0,
+                  color: Colors.blue)));
+    }
+  }
 }
