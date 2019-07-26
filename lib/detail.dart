@@ -242,7 +242,7 @@ class PodCastDetailState extends State<PodCastDetail> {
         ),
       );
 
-  Widget displayUrls(String description) {
+  displayUrls(String description) {
     var regex = VerbalExpression()
       ..startOfLine()
       ..then("https")
@@ -262,22 +262,25 @@ class PodCastDetailState extends State<PodCastDetail> {
     var urlToDisplay =
         (urlRegex.allMatches(description).map((m) => m.group(0)));
 
-    for (var n in urlToDisplay) {
+    for (var url in urlToDisplay) {
       return Padding(
-          padding: EdgeInsets.all(8.0),
-          child: Linkify(
-              onOpen: (url) async {
-                if (await canLaunch(url)) {
-                  await launch(url);
-                } else {
-                  throw 'Could not launch $url';
-                }
-              },
-              text: '\n${urlToDisplay}\n',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16.0,
-                  color: Colors.blue)));
+        padding: EdgeInsets.all(8.0),
+        child: Linkify(
+          onOpen: (url) async {
+            if (await canLaunch(url)) {
+              await launch(url);
+            } else {
+              throw 'Could not launch $url';
+            }
+          },
+          text: '\n$url\n',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16.0,
+            color: Colors.blue,
+          ),
+        ),
+      );
     }
   }
 }

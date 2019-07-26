@@ -6,20 +6,6 @@ import 'package:itsallwidgets_podcast/detail.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PodCastList extends StatelessWidget {
-//  final recognizer = TapGestureRecognizer()
-//    ..onTap = () {
-//      _launchURL();
-//    };
-
-  _launchURL() async {
-    const url = 'https://twitter.com/hillelcoren';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     bloc.fetchAllPodCast();
@@ -85,7 +71,7 @@ class PodCastList extends StatelessWidget {
           child: Hero(
             tag: snapshot.data.items[index].title,
             child: Image.network(
-              snapshot.data.feed.image,
+              snapshot.data.items[index].thumbnail,
               fit: BoxFit.cover,
               height: 48,
               width: 48,
