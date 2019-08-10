@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:itsallwidgets_podcast/data/rss_response.dart';
 
-
 class PCProvider {
   Future<RssResponse> fetchPodCast() async {
     final response = await http.get(
