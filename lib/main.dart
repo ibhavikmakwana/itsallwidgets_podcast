@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: appName,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: 'MajorMonoDisplay',
       ),
