@@ -5,6 +5,10 @@
 It's a Flutter app that lists all the Flutter Podcast from the [itsallwidgets](https://itsallwidgets.com/) that is hosted by the Hillel Coren.
 Listen to all the latest podcast.
 
+
+![Graphic](./graphic/feature_graphic.png)
+
+
 # Preview
 
 | Podcast list | Detail |
