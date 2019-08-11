@@ -1,5 +1,6 @@
 class RssResponse {
   String status;
+  String message;
   Feed feed;
   List<Items> items;
 
@@ -7,6 +8,7 @@ class RssResponse {
 
   RssResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
+    message = json['message'];
     feed = json['feed'] != null ? new Feed.fromJson(json['feed']) : null;
     if (json['items'] != null) {
       items = new List<Items>();
@@ -19,6 +21,7 @@ class RssResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['status'] = this.status;
+    data['message'] = this.message;
     if (this.feed != null) {
       data['feed'] = this.feed.toJson();
     }
