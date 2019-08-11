@@ -14,33 +14,29 @@ class ListItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      child: ListTile(
-        onTap: () {
-          Navigator.of(context).push(
-            CupertinoPageRoute(
-              builder: (context) => Provider(
-                builder: (_) => DetailStore(),
-                dispose: (_, DetailStore store) => store.dispose(),
-                child: PodCastDetail(item, feed),
-              ),
-            ),
-          );
-        },
-        contentPadding: EdgeInsets.all(8),
-        trailing: Icon(Icons.navigate_next),
-        title: Text(item.title),
-        leading: ClipOval(
-          child: Hero(
-            tag: item.title,
-            child: Image.network(
-              item.thumbnail,
-              fit: BoxFit.cover,
-              height: 48,
-              width: 48,
+    return ListTile(
+      onTap: () {
+        Navigator.of(context).push(
+          CupertinoPageRoute(
+            builder: (context) => Provider(
+              builder: (_) => DetailStore(),
+              dispose: (_, DetailStore store) => store.dispose(),
+              child: PodCastDetail(item, feed),
             ),
           ),
+        );
+      },
+      contentPadding:
+          const EdgeInsets.only(left: 16, right: 16, bottom: 8, top: 8),
+      title: Text(item.title),
+      leading: Hero(
+        tag: item.title,
+        child: FadeInImage(
+          placeholder: AssetImage('assets/app_icon.png'),
+          image: NetworkImage(feed.image),
+          width: 48,
+          height: 48,
+          fit: BoxFit.cover,
         ),
       ),
     );

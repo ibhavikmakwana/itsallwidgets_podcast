@@ -12,6 +12,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: appName,
+      theme: ThemeData(
+        fontFamily: 'MajorMonoDisplay',
+      ),
       home: Provider(
         builder: ((_) => ListStore()),
         dispose: (_, ListStore store) => store.dispose(),

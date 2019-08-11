@@ -1,1 +1,1 @@
-const String appName = 'It\'s all widgets podcast';
+const String appName = 'It\'s All Widget Podcast';

@@ -27,7 +27,10 @@ class PodCastDetail extends StatelessWidget {
                 children: [
                   Hero(
                     tag: item.title,
-                    child: Image.network(feed.image),
+                    child: FadeInImage(
+                      placeholder: AssetImage('assets/app_icon.png'),
+                      image: NetworkImage(feed.image),
+                    ),
                   ),
                   IconButton(
                     padding: EdgeInsets.all(16),

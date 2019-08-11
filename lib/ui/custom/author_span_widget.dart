@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class AuthorSpanWidget extends StatelessWidget {
   final String authorText;
 
-  const AuthorSpanWidget({Key key,@required this.authorText}) : super(key: key);
+  const AuthorSpanWidget({Key key, @required this.authorText})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -13,12 +14,14 @@ class AuthorSpanWidget extends StatelessWidget {
           style: TextStyle(
             fontWeight: FontWeight.w400,
             fontSize: 20,
+            fontFamily: "MajorMonoDisplay",
           ),
           children: <TextSpan>[
             TextSpan(
               text: 'Hosted by ',
               style: TextStyle(
                 color: Colors.blue.shade500,
+                fontFamily: "MajorMonoDisplay",
               ),
             ),
             TextSpan(
@@ -26,6 +29,7 @@ class AuthorSpanWidget extends StatelessWidget {
               style: TextStyle(
                 fontWeight: FontWeight.w900,
                 color: Colors.blue.shade900,
+                fontFamily: "MajorMonoDisplay",
               ),
             ),
           ],
