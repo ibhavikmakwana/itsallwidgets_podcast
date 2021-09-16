@@ -7,7 +7,10 @@ import 'package:itsallwidgets_podcast/data/rss_response.dart';
 class PCProvider {
   Future<RssResponse> fetchPodCast() async {
     final response = await http.get(
-        'https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fitsallwidgets.com%2Fpodcast%2Ffeed');
+      Uri.parse(
+        'https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fitsallwidgets.com%2Fpodcast%2Ffeed',
+      ),
+    );
 
     if (response.statusCode == 200) {
       // If the call to the server was successful, parse the JSON

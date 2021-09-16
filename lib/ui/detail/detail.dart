@@ -71,7 +71,8 @@ class PodCastDetail extends StatelessWidget {
                     }
                   },
                   text: item.description,
-                  linkTypes: [LinkType.url],
+
+                  // linkTypes: [LinkType.url],
                   linkStyle:
                       const TextStyle(fontSize: 16, color: Colors.indigo),
                   style: const TextStyle(fontSize: 16),
@@ -176,7 +177,9 @@ class PlayerControllerWidget extends StatelessWidget {
                   Text(
                     store.position != null
                         ? "${store.positionText ?? ''} / ${store.durationText ?? ''}"
-                        : store.duration != null ? store.durationText : '',
+                        : store.duration != null
+                            ? store.durationText
+                            : '',
                     style: const TextStyle(fontSize: 24),
                   ),
                 ],

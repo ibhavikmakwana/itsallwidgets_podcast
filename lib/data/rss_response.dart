@@ -11,7 +11,7 @@ class RssResponse {
     message = json['message'];
     feed = json['feed'] != null ? new Feed.fromJson(json['feed']) : null;
     if (json['items'] != null) {
-      items = new List<Items>();
+      items = [];
       json['items'].forEach((v) {
         items.add(new Items.fromJson(v));
       });
@@ -42,11 +42,11 @@ class Feed {
 
   Feed(
       {this.url,
-        this.title,
-        this.link,
-        this.author,
-        this.description,
-        this.image});
+      this.title,
+      this.link,
+      this.author,
+      this.description,
+      this.image});
 
   Feed.fromJson(Map<String, dynamic> json) {
     url = json['url'];
@@ -80,16 +80,17 @@ class Items {
   String content;
   Enclosure enclosure;
 
-  Items(
-      {this.title,
-        this.pubDate,
-        this.link,
-        this.guid,
-        this.author,
-        this.thumbnail,
-        this.description,
-        this.content,
-        this.enclosure,});
+  Items({
+    this.title,
+    this.pubDate,
+    this.link,
+    this.guid,
+    this.author,
+    this.thumbnail,
+    this.description,
+    this.content,
+    this.enclosure,
+  });
 
   Items.fromJson(Map<String, dynamic> json) {
     title = json['title'];
@@ -135,7 +136,7 @@ class Enclosure {
     type = json['type'];
     duration = json['duration'];
     rating =
-    json['rating'] != null ? new Rating.fromJson(json['rating']) : null;
+        json['rating'] != null ? new Rating.fromJson(json['rating']) : null;
   }
 
   Map<String, dynamic> toJson() {
