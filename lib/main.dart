@@ -17,8 +17,10 @@ class MyApp extends StatelessWidget {
         fontFamily: 'MajorMonoDisplay',
       ),
       home: Provider(
-        builder: ((_) => ListStore()),
-        dispose: (_, ListStore store) => store.dispose(),
+        create: ((_) => ListStore()),
+        // dispose: (_, ListStore store) {
+        //   return store.dispose();
+        // },
         child: PodCastList(),
       ),
     );

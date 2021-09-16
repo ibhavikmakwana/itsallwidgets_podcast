@@ -19,8 +19,8 @@ class ListItemView extends StatelessWidget {
         Navigator.of(context).push(
           CupertinoPageRoute(
             builder: (context) => Provider(
-              builder: (_) => DetailStore(),
-              dispose: (_, DetailStore store) => store.dispose(),
+              create: (_) => DetailStore(),
+              // dispose: (_, DetailStore store) => store.dispose(),
               child: PodCastDetail(item, feed),
             ),
           ),

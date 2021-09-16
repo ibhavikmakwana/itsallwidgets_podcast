@@ -12,13 +12,13 @@ abstract class _DetailStore with Store {
     initPlayer();
   }
 
-  @override
-  dispose() {
-    _positionSubscription.cancel();
-    _audioPlayerStateSubscription.cancel();
-    audioPlayer.stop();
-    super.dispose();
-  }
+  // @override
+  // dispose() {
+  //   _positionSubscription.cancel();
+  //   _audioPlayerStateSubscription.cancel();
+  //   audioPlayer.stop();
+  //   // super.dispose();
+  // }
 
   AudioPlayer audioPlayer;
   StreamSubscription _positionSubscription;
