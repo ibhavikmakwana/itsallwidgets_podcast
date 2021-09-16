@@ -13,10 +13,10 @@ abstract class _ListStore with Store {
   }
 
   @observable
-  BaseResponse<RssResponse> response;
+  BaseResponse<RssResponse>? response;
 
   @action
-  Future<BaseResponse> fetchAllPodCast() async {
+  Future<BaseResponse?> fetchAllPodCast() async {
     response = BaseResponse.loading("Loading");
     await Repository().fetchPodCast().then((res) {
       if (res.status == "ok") {

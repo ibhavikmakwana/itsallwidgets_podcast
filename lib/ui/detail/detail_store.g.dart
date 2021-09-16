@@ -9,13 +9,13 @@ part of 'detail_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars
 
 mixin _$DetailStore on _DetailStore, Store {
-  Computed<dynamic> _$durationTextComputed;
+  Computed<dynamic>? _$durationTextComputed;
 
   @override
   dynamic get durationText =>
       (_$durationTextComputed ??= Computed<dynamic>(() => super.durationText))
           .value;
-  Computed<dynamic> _$positionTextComputed;
+  Computed<dynamic>? _$positionTextComputed;
 
   @override
   dynamic get positionText =>
@@ -25,14 +25,14 @@ mixin _$DetailStore on _DetailStore, Store {
   final _$durationAtom = Atom(name: '_DetailStore.duration');
 
   @override
-  Duration get duration {
+  Duration? get duration {
     _$durationAtom.context.enforceReadPolicy(_$durationAtom);
     _$durationAtom.reportObserved();
     return super.duration;
   }
 
   @override
-  set duration(Duration value) {
+  set duration(Duration? value) {
     _$durationAtom.context.conditionallyRunInAction(() {
       super.duration = value;
       _$durationAtom.reportChanged();
@@ -76,14 +76,14 @@ mixin _$DetailStore on _DetailStore, Store {
   final _$positionAtom = Atom(name: '_DetailStore.position');
 
   @override
-  Duration get position {
+  Duration? get position {
     _$positionAtom.context.enforceReadPolicy(_$positionAtom);
     _$positionAtom.reportObserved();
     return super.position;
   }
 
   @override
-  set position(Duration value) {
+  set position(Duration? value) {
     _$positionAtom.context.conditionallyRunInAction(() {
       super.position = value;
       _$positionAtom.reportChanged();
@@ -110,8 +110,8 @@ mixin _$DetailStore on _DetailStore, Store {
   final _$playAsyncAction = AsyncAction('play');
 
   @override
-  Future play(String guid) {
-    return _$playAsyncAction.run(() => super.play(guid));
+  Future play(String? guid) {
+    return _$playAsyncAction.run(() => super.play(guid!));
   }
 
   final _$pauseAsyncAction = AsyncAction('pause');

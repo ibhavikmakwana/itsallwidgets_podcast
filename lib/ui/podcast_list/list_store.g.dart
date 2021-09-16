@@ -12,14 +12,14 @@ mixin _$ListStore on _ListStore, Store {
   final _$responseAtom = Atom(name: '_ListStore.response');
 
   @override
-  BaseResponse<RssResponse> get response {
+  BaseResponse<RssResponse>? get response {
     _$responseAtom.context.enforceReadPolicy(_$responseAtom);
     _$responseAtom.reportObserved();
     return super.response;
   }
 
   @override
-  set response(BaseResponse<RssResponse> value) {
+  set response(BaseResponse<RssResponse>? value) {
     _$responseAtom.context.conditionallyRunInAction(() {
       super.response = value;
       _$responseAtom.reportChanged();
@@ -29,7 +29,7 @@ mixin _$ListStore on _ListStore, Store {
   final _$fetchAllPodCastAsyncAction = AsyncAction('fetchAllPodCast');
 
   @override
-  Future<BaseResponse> fetchAllPodCast() {
+  Future<BaseResponse?> fetchAllPodCast() {
     return _$fetchAllPodCastAsyncAction.run(() => super.fetchAllPodCast());
   }
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AuthorSpanWidget extends StatelessWidget {
-  final String authorText;
+  final String? authorText;
 
-  const AuthorSpanWidget({Key key, @required this.authorText})
+  const AuthorSpanWidget({Key? key, required this.authorText})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
