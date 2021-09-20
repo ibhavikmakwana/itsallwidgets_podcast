@@ -12,19 +12,19 @@ abstract class _DetailStore with Store {
     initPlayer();
   }
 
-  @override
-  dispose() {
-    _positionSubscription.cancel();
-    _audioPlayerStateSubscription.cancel();
-    audioPlayer.stop();
-    super.dispose();
-  }
+  // @override
+  // dispose() {
+  //   _positionSubscription.cancel();
+  //   _audioPlayerStateSubscription.cancel();
+  //   audioPlayer.stop();
+  //   // super.dispose();
+  // }
 
-  AudioPlayer audioPlayer;
-  StreamSubscription _positionSubscription;
-  StreamSubscription _audioPlayerStateSubscription;
+  late AudioPlayer audioPlayer;
+  StreamSubscription? _positionSubscription;
+  StreamSubscription? _audioPlayerStateSubscription;
   @observable
-  Duration duration;
+  Duration? duration;
 
   @observable
   PlayerState playerState = PlayerState.stopped;
@@ -33,7 +33,7 @@ abstract class _DetailStore with Store {
   bool isAudioLoading = false;
 
   @observable
-  Duration position;
+  Duration? position;
 
   @observable
   bool isMuted = false;

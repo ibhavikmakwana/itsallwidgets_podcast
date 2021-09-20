@@ -1,8 +1,8 @@
 class RssResponse {
-  String status;
-  String message;
-  Feed feed;
-  List<Items> items;
+  String? status;
+  String? message;
+  Feed? feed;
+  List<Items>? items;
 
   RssResponse({this.status, this.feed, this.items});
 
@@ -11,9 +11,9 @@ class RssResponse {
     message = json['message'];
     feed = json['feed'] != null ? new Feed.fromJson(json['feed']) : null;
     if (json['items'] != null) {
-      items = new List<Items>();
+      items = [];
       json['items'].forEach((v) {
-        items.add(new Items.fromJson(v));
+        items!.add(new Items.fromJson(v));
       });
     }
   }
@@ -23,30 +23,30 @@ class RssResponse {
     data['status'] = this.status;
     data['message'] = this.message;
     if (this.feed != null) {
-      data['feed'] = this.feed.toJson();
+      data['feed'] = this.feed!.toJson();
     }
     if (this.items != null) {
-      data['items'] = this.items.map((v) => v.toJson()).toList();
+      data['items'] = this.items!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Feed {
-  String url;
-  String title;
-  String link;
-  String author;
-  String description;
-  String image;
+  String? url;
+  String? title;
+  String? link;
+  String? author;
+  String? description;
+  String? image;
 
   Feed(
       {this.url,
-        this.title,
-        this.link,
-        this.author,
-        this.description,
-        this.image});
+      this.title,
+      this.link,
+      this.author,
+      this.description,
+      this.image});
 
   Feed.fromJson(Map<String, dynamic> json) {
     url = json['url'];
@@ -70,26 +70,27 @@ class Feed {
 }
 
 class Items {
-  String title;
-  String pubDate;
-  String link;
-  String guid;
-  String author;
-  String thumbnail;
-  String description;
-  String content;
-  Enclosure enclosure;
+  String? title;
+  String? pubDate;
+  String? link;
+  String? guid;
+  String? author;
+  String? thumbnail;
+  String? description;
+  String? content;
+  Enclosure? enclosure;
 
-  Items(
-      {this.title,
-        this.pubDate,
-        this.link,
-        this.guid,
-        this.author,
-        this.thumbnail,
-        this.description,
-        this.content,
-        this.enclosure,});
+  Items({
+    this.title,
+    this.pubDate,
+    this.link,
+    this.guid,
+    this.author,
+    this.thumbnail,
+    this.description,
+    this.content,
+    this.enclosure,
+  });
 
   Items.fromJson(Map<String, dynamic> json) {
     title = json['title'];
@@ -116,17 +117,17 @@ class Items {
     data['description'] = this.description;
     data['content'] = this.content;
     if (this.enclosure != null) {
-      data['enclosure'] = this.enclosure.toJson();
+      data['enclosure'] = this.enclosure!.toJson();
     }
     return data;
   }
 }
 
 class Enclosure {
-  String link;
-  String type;
-  int duration;
-  Rating rating;
+  String? link;
+  String? type;
+  int? duration;
+  Rating? rating;
 
   Enclosure({this.link, this.type, this.duration, this.rating});
 
@@ -135,7 +136,7 @@ class Enclosure {
     type = json['type'];
     duration = json['duration'];
     rating =
-    json['rating'] != null ? new Rating.fromJson(json['rating']) : null;
+        json['rating'] != null ? new Rating.fromJson(json['rating']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -144,15 +145,15 @@ class Enclosure {
     data['type'] = this.type;
     data['duration'] = this.duration;
     if (this.rating != null) {
-      data['rating'] = this.rating.toJson();
+      data['rating'] = this.rating!.toJson();
     }
     return data;
   }
 }
 
 class Rating {
-  String scheme;
-  String value;
+  String? scheme;
+  String? value;
 
   Rating({this.scheme, this.value});
 

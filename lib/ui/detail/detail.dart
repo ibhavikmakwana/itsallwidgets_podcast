@@ -8,8 +8,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'detail_store.dart';
 
 class PodCastDetail extends StatelessWidget {
-  final Items item;
-  final Feed feed;
+  final Items? item;
+  final Feed? feed;
 
   PodCastDetail(this.item, this.feed);
   @override
@@ -26,10 +26,10 @@ class PodCastDetail extends StatelessWidget {
               Stack(
                 children: [
                   Hero(
-                    tag: item.title,
+                    tag: item!.title!,
                     child: FadeInImage(
                       placeholder: AssetImage('assets/app_icon.png'),
-                      image: NetworkImage(feed.image),
+                      image: NetworkImage(feed!.image!),
                     ),
                   ),
                   IconButton(
@@ -45,7 +45,7 @@ class PodCastDetail extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Text(
-                  item.title,
+                  item!.title!,
                   style: const TextStyle(
                       fontSize: 24, fontWeight: FontWeight.bold),
                 ),
@@ -70,8 +70,9 @@ class PodCastDetail extends StatelessWidget {
                       throw 'Could not launch $link';
                     }
                   },
-                  text: item.description,
-                  linkTypes: [LinkType.url],
+                  text: item!.description!,
+
+                  // linkTypes: [LinkType.url],
                   linkStyle:
                       const TextStyle(fontSize: 16, color: Colors.indigo),
                   style: const TextStyle(fontSize: 16),
@@ -86,10 +87,10 @@ class PodCastDetail extends StatelessWidget {
 }
 
 class PlayerControllerWidget extends StatelessWidget {
-  final DetailStore store;
-  final Items item;
+  final DetailStore? store;
+  final Items? item;
 
-  const PlayerControllerWidget({Key key, this.store, this.item})
+  const PlayerControllerWidget({Key? key, this.store, this.item})
       : super(key: key);
 
   @override
@@ -106,23 +107,23 @@ class PlayerControllerWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  store.isAudioLoading
+                  store!.isAudioLoading
                       ? CircularProgressIndicator()
                       : IconButton(
-                          onPressed: store.isPlaying
-                              ? () => store.pause()
-                              : () => store.play(item.guid),
+                          onPressed: store!.isPlaying
+                              ? () => store!.pause()
+                              : () => store!.play(item!.guid),
                           iconSize: 48,
-                          icon: store.isPlaying
+                          icon: store!.isPlaying
                               ? const Icon(Icons.pause)
                               : const Icon(Icons.play_arrow),
                           color: Colors.blue,
                         ),
                   Visibility(
-                    visible: store.isPlaying || store.isPaused,
+                    visible: store!.isPlaying || store!.isPaused,
                     child: IconButton(
-                      onPressed: store.isPlaying || store.isPaused
-                          ? () => store.stop()
+                      onPressed: store!.isPlaying || store!.isPaused
+                          ? () => store!.stop()
                           : null,
                       iconSize: 48,
                       icon: const Icon(Icons.stop),
@@ -130,9 +131,9 @@ class PlayerControllerWidget extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    onPressed: () => store.mute(!store.isMuted),
+                    onPressed: () => store!.mute(!store!.isMuted),
                     iconSize: 48,
-                    icon: store.isMuted
+                    icon: store!.isMuted
                         ? const Icon(Icons.volume_off)
                         : const Icon(Icons.volume_up),
                     color: Colors.blue,
@@ -140,13 +141,13 @@ class PlayerControllerWidget extends StatelessWidget {
                 ],
               ),
               Visibility(
-                visible: store.duration == null,
+                visible: store!.duration == null,
                 child: Slider(
-                  value: store.position?.inMilliseconds?.toDouble() ?? 0,
+                  value: store!.position?.inMilliseconds.toDouble() ?? 0,
                   onChanged: (double value) =>
-                      store.audioPlayer.seek((value / 1000).roundToDouble()),
+                      store!.audioPlayer.seek((value / 1000).roundToDouble()),
                   min: 0,
-                  max: store.duration.inMilliseconds.toDouble(),
+                  max: store!.duration!.inMilliseconds.toDouble(),
                 ),
               ),
               Row(
@@ -161,11 +162,11 @@ class PlayerControllerWidget extends StatelessWidget {
                           valueColor: AlwaysStoppedAnimation(Colors.grey[300]),
                         ),
                         CircularProgressIndicator(
-                          value: store.position != null &&
-                                  store.position.inMilliseconds > 0
-                              ? (store.position?.inMilliseconds?.toDouble() ??
+                          value: store!.position != null &&
+                                  store!.position!.inMilliseconds > 0
+                              ? (store!.position?.inMilliseconds.toDouble() ??
                                       0) /
-                                  (store.duration?.inMilliseconds?.toDouble() ??
+                                  (store!.duration?.inMilliseconds.toDouble() ??
                                       0)
                               : 0,
                           valueColor: AlwaysStoppedAnimation(Colors.blue),
@@ -174,9 +175,11 @@ class PlayerControllerWidget extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    store.position != null
-                        ? "${store.positionText ?? ''} / ${store.durationText ?? ''}"
-                        : store.duration != null ? store.durationText : '',
+                    store!.position != null
+                        ? "${store!.positionText ?? ''} / ${store!.durationText ?? ''}"
+                        : store!.duration != null
+                            ? store!.durationText
+                            : '',
                     style: const TextStyle(fontSize: 24),
                   ),
                 ],

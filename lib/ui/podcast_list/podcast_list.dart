@@ -17,17 +17,16 @@ class PodCastList extends StatelessWidget {
       child: Scaffold(
         body: Observer(
           builder: (context) {
-            switch (store.response.status) {
+            switch (store.response!.status) {
               case Status.LOADING:
                 return Center(child: CircularProgressIndicator());
-                break;
               case Status.COMPLETED:
                 return SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      TitleWidget(title: store.response.data.feed.title),
+                      TitleWidget(title: store.response!.data!.feed!.title),
                       Container(
                         color: Colors.blue,
                         height: 3,
@@ -36,12 +35,12 @@ class PodCastList extends StatelessWidget {
                             EdgeInsets.only(left: 16, right: 16, bottom: 16),
                       ),
                       AuthorSpanWidget(
-                        authorText: store.response.data.feed.author,
+                        authorText: store.response!.data!.feed!.author,
                       ),
                       Container(
                         margin: EdgeInsets.only(left: 16, right: 16, bottom: 8),
                         child: Text(
-                          store.response.data.feed.description,
+                          store.response!.data!.feed!.description!,
                           style: TextStyle(fontSize: 16.0),
                         ),
                       ),
@@ -50,22 +49,19 @@ class PodCastList extends StatelessWidget {
                         physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           return ListItemView(
-                            item: store.response.data.items[index],
-                            feed: store.response.data.feed,
+                            item: store.response!.data!.items![index],
+                            feed: store.response!.data!.feed,
                           );
                         },
-                        itemCount: store.response.data.items.length,
+                        itemCount: store.response!.data!.items!.length,
                       ),
                     ],
                   ),
                 );
-                break;
               case Status.ERROR:
-                return Center(child: Text('${store.response.message}'));
-                break;
+                return Center(child: Text('${store.response!.message}'));
               default:
-                return Center(child: Text('${store.response.message}'));
-                break;
+                return Center(child: Text('${store.response!.message}'));
             }
           },
         ),
