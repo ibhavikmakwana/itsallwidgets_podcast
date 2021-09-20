@@ -72,3 +72,7 @@ build/
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 /android/misc/
 /android/key.properties
+/android/keystore.jks
+/android/upload_certificate.pem
+/ios/Flutter/flutter_export_environment.sh
+/ios/Podfile
