@@ -1,14 +1,13 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:itsallwidgets_podcast/data/rss_response.dart';
-
 import 'package:itsallwidgets_podcast/ui/detail/detail.dart';
 import 'package:itsallwidgets_podcast/ui/detail/detail_store.dart';
 import 'package:provider/provider.dart';
 
 class ListItemView extends StatelessWidget {
-  final Items? item;
-  final Feed? feed;
+  final Item? item;
+  final RssResponse? feed;
 
   const ListItemView({Key? key, this.item, this.feed}) : super(key: key);
 
@@ -33,7 +32,7 @@ class ListItemView extends StatelessWidget {
         tag: item!.title!,
         child: FadeInImage(
           placeholder: AssetImage('assets/app_icon.png'),
-          image: NetworkImage(feed!.image!),
+          image: NetworkImage('https://itsallwidgets.com/images/podcast.jpg'),
           width: 48,
           height: 48,
           fit: BoxFit.cover,

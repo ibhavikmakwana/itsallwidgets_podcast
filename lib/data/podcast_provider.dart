@@ -8,7 +8,7 @@ class PCProvider {
   Future<RssResponse> fetchPodCast() async {
     final response = await http.get(
       Uri.parse(
-        'https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fitsallwidgets.com%2Fpodcast%2Ffeed',
+        'https://feed2json.org/convert?url=https%3A%2F%2Fitsallwidgets.com%2Fpodcast%2Ffeed',
       ),
     );
 

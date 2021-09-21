@@ -5,13 +5,15 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:itsallwidgets_podcast/data/rss_response.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 import 'detail_store.dart';
 
 class PodCastDetail extends StatelessWidget {
-  final Items? item;
-  final Feed? feed;
+  final Item? item;
+  final RssResponse? feed;
 
   PodCastDetail(this.item, this.feed);
+
   @override
   Widget build(BuildContext context) {
     final store = Provider.of<DetailStore>(context);
@@ -29,7 +31,9 @@ class PodCastDetail extends StatelessWidget {
                     tag: item!.title!,
                     child: FadeInImage(
                       placeholder: AssetImage('assets/app_icon.png'),
-                      image: NetworkImage(feed!.image!),
+                      image: NetworkImage(
+                        'https://itsallwidgets.com/images/podcast.jpg',
+                      ),
                     ),
                   ),
                   IconButton(
@@ -70,7 +74,7 @@ class PodCastDetail extends StatelessWidget {
                       throw 'Could not launch $link';
                     }
                   },
-                  text: item!.description!,
+                  text: item!.contentHtml!,
 
                   // linkTypes: [LinkType.url],
                   linkStyle:
@@ -88,7 +92,7 @@ class PodCastDetail extends StatelessWidget {
 
 class PlayerControllerWidget extends StatelessWidget {
   final DetailStore? store;
-  final Items? item;
+  final Item? item;
 
   const PlayerControllerWidget({Key? key, this.store, this.item})
       : super(key: key);

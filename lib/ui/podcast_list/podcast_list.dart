@@ -26,7 +26,7 @@ class PodCastList extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      TitleWidget(title: store.response!.data!.feed!.title),
+                      TitleWidget(title: store.response?.data?.title),
                       Container(
                         color: Colors.blue,
                         height: 3,
@@ -35,12 +35,12 @@ class PodCastList extends StatelessWidget {
                             EdgeInsets.only(left: 16, right: 16, bottom: 16),
                       ),
                       AuthorSpanWidget(
-                        authorText: store.response!.data!.feed!.author,
+                        authorText: store.response?.data?.author?.name,
                       ),
                       Container(
                         margin: EdgeInsets.only(left: 16, right: 16, bottom: 8),
                         child: Text(
-                          store.response!.data!.feed!.description!,
+                          store.response?.data?.description ?? '',
                           style: TextStyle(fontSize: 16.0),
                         ),
                       ),
@@ -49,11 +49,11 @@ class PodCastList extends StatelessWidget {
                         physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
                           return ListItemView(
-                            item: store.response!.data!.items![index],
-                            feed: store.response!.data!.feed,
+                            item: store.response?.data?.items![index],
+                            feed: store.response!.data,
                           );
                         },
-                        itemCount: store.response!.data!.items!.length,
+                        itemCount: store.response?.data?.items?.length ?? 0,
                       ),
                     ],
                   ),
