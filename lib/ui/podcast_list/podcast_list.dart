@@ -1,18 +1,32 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:itsallwidgets_podcast/data/rss_response.dart';
 import 'package:itsallwidgets_podcast/network/base_response.dart';
 import 'package:itsallwidgets_podcast/ui/custom/author_span_widget.dart';
 import 'package:itsallwidgets_podcast/ui/custom/title_widget.dart';
+import 'package:itsallwidgets_podcast/ui/detail/detail.dart';
+import 'package:itsallwidgets_podcast/ui/detail/detail_store.dart';
 import 'package:provider/provider.dart';
 
 import 'list_item_view.dart';
 import 'list_store.dart';
 
-class PodCastList extends StatelessWidget {
+class PodCastList extends StatefulWidget {
+  @override
+  State<PodCastList> createState() => _PodCastListState();
+}
+
+class _PodCastListState extends State<PodCastList> {
+  late final ListStore store;
+  @override
+  void initState() {
+    super.initState();
+    store = ListStore();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final store = Provider.of<ListStore>(context);
     return SafeArea(
       child: Scaffold(
         body: Observer(
@@ -48,7 +62,20 @@ class PodCastList extends StatelessWidget {
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
+                          final Item item =
+                              store.response!.data!.items![index]!;
+                          final RssResponse feed = store.response!.data!;
                           return ListItemView(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                CupertinoPageRoute(
+                                  builder: (context) => Provider(
+                                    create: (_) => DetailStore(),
+                                    child: PodCastDetail(item, feed),
+                                  ),
+                                ),
+                              );
+                            },
                             item: store.response?.data?.items![index],
                             feed: store.response!.data,
                           );

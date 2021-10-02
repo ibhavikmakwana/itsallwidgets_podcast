@@ -3,21 +3,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:itsallwidgets_podcast/data/rss_response.dart';
-import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'detail_store.dart';
 
-class PodCastDetail extends StatelessWidget {
-  final Item? item;
-  final RssResponse? feed;
+class PodCastDetail extends StatefulWidget {
+  final Item item;
+  final RssResponse feed;
 
   PodCastDetail(this.item, this.feed);
 
   @override
-  Widget build(BuildContext context) {
-    final store = Provider.of<DetailStore>(context);
+  State<PodCastDetail> createState() => _PodCastDetailState();
+}
 
+class _PodCastDetailState extends State<PodCastDetail> {
+  late final DetailStore store;
+  @override
+  void initState() {
+    super.initState();
+    store = DetailStore();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -28,7 +42,7 @@ class PodCastDetail extends StatelessWidget {
               Stack(
                 children: [
                   Hero(
-                    tag: item!.title!,
+                    tag: widget.item.title!,
                     child: FadeInImage(
                       placeholder: AssetImage('assets/app_icon.png'),
                       image: NetworkImage(
@@ -49,7 +63,7 @@ class PodCastDetail extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: Text(
-                  item!.title!,
+                  widget.item.title!,
                   style: const TextStyle(
                       fontSize: 24, fontWeight: FontWeight.bold),
                 ),
@@ -62,7 +76,7 @@ class PodCastDetail extends StatelessWidget {
               ),
               PlayerControllerWidget(
                 store: store,
-                item: item,
+                item: widget.item,
               ),
               Padding(
                 padding: const EdgeInsets.all(16),
@@ -74,7 +88,7 @@ class PodCastDetail extends StatelessWidget {
                       throw 'Could not launch $link';
                     }
                   },
-                  text: item!.contentHtml!,
+                  text: widget.item.contentHtml!,
 
                   // linkTypes: [LinkType.url],
                   linkStyle:
