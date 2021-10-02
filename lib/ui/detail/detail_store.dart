@@ -12,17 +12,10 @@ abstract class _DetailStore with Store {
     initPlayer();
   }
 
-  // @override
-  // dispose() {
-  //   _positionSubscription.cancel();
-  //   _audioPlayerStateSubscription.cancel();
-  //   audioPlayer.stop();
-  //   // super.dispose();
-  // }
-
   late AudioPlayer audioPlayer;
-  StreamSubscription? _positionSubscription;
-  StreamSubscription? _audioPlayerStateSubscription;
+  late StreamSubscription _positionSubscription;
+  late StreamSubscription _audioPlayerStateSubscription;
+
   @observable
   Duration? duration;
 
@@ -97,6 +90,12 @@ abstract class _DetailStore with Store {
       duration = Duration(seconds: 0);
       position = Duration(seconds: 0);
     });
+  }
+
+  dispose() {
+    _positionSubscription.cancel();
+    _audioPlayerStateSubscription.cancel();
+    audioPlayer.stop();
   }
 }
 
