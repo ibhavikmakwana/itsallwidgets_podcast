@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:itsallwidgets_podcast/ads/ad_helper.dart';
 import 'package:itsallwidgets_podcast/data/rss_response.dart';
 import 'package:itsallwidgets_podcast/network/base_response.dart';
 import 'package:itsallwidgets_podcast/ui/custom/author_span_widget.dart';
@@ -19,10 +23,50 @@ class PodCastList extends StatefulWidget {
 
 class _PodCastListState extends State<PodCastList> {
   late final ListStore store;
+  static final _kAdIndex = 10;
+  late BannerAd _ad;
+  bool _isAdLoaded = false;
+
   @override
   void initState() {
     super.initState();
+    _initGoogleMobileAds();
     store = ListStore();
+    _ad = BannerAd(
+      adUnitId: AdHelper.bannerAdUnitId,
+      size: AdSize.banner,
+      request: AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (_) {
+          setState(() {
+            _isAdLoaded = true;
+          });
+        },
+        onAdFailedToLoad: (ad, error) {
+          // Releases an ad resource when it fails to load
+          ad.dispose();
+
+          log('Ad load failed (code=${error.code} message=${error.message})');
+        },
+      ),
+    );
+    _ad.load();
+  }
+
+  Future<InitializationStatus> _initGoogleMobileAds() =>
+      MobileAds.instance.initialize();
+
+  int _getDestinationItemIndex(int rawIndex) {
+    if (rawIndex >= _kAdIndex && _isAdLoaded) {
+      return rawIndex - 1;
+    }
+    return rawIndex;
+  }
+
+  @override
+  void dispose() {
+    _ad.dispose();
+    super.dispose();
   }
 
   @override
@@ -62,23 +106,33 @@ class _PodCastListState extends State<PodCastList> {
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
-                          final Item item =
-                              store.response!.data!.items![index]!;
                           final RssResponse feed = store.response!.data!;
-                          return ListItemView(
-                            onTap: () {
-                              Navigator.of(context).push(
-                                CupertinoPageRoute(
-                                  builder: (context) => Provider(
-                                    create: (_) => DetailStore(),
-                                    child: PodCastDetail(item, feed),
+                          if (_isAdLoaded && index == _kAdIndex) {
+                            return Container(
+                              child: AdWidget(ad: _ad),
+                              width: _ad.size.width.toDouble(),
+                              height: 72.0,
+                              alignment: Alignment.center,
+                            );
+                          } else {
+                            final Item item = store.response!.data!
+                                .items![_getDestinationItemIndex(index)]!;
+
+                            return ListItemView(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  CupertinoPageRoute(
+                                    builder: (context) => Provider(
+                                      create: (_) => DetailStore(),
+                                      child: PodCastDetail(item, feed),
+                                    ),
                                   ),
-                                ),
-                              );
-                            },
-                            item: store.response?.data?.items![index],
-                            feed: store.response!.data,
-                          );
+                                );
+                              },
+                              item: store.response?.data?.items![index],
+                              feed: store.response!.data,
+                            );
+                          }
                         },
                         itemCount: store.response?.data?.items?.length ?? 0,
                       ),

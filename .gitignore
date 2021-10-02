@@ -76,3 +76,4 @@ build/
 /android/upload_certificate.pem
 /ios/Flutter/flutter_export_environment.sh
 /ios/Podfile
+/lib/ads/ad_helper.dart
