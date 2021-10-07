@@ -115,8 +115,9 @@ class _PodCastListState extends State<PodCastList> {
                               alignment: Alignment.center,
                             );
                           } else {
-                            final Item item = store.response!.data!
-                                .items![_getDestinationItemIndex(index)]!;
+                            final _index = _getDestinationItemIndex(index);
+                            final Item item =
+                                store.response!.data!.items![_index]!;
 
                             return ListItemView(
                               onTap: () {
@@ -129,7 +130,7 @@ class _PodCastListState extends State<PodCastList> {
                                   ),
                                 );
                               },
-                              item: store.response?.data?.items![index],
+                              item: item,
                               feed: store.response!.data,
                             );
                           }
