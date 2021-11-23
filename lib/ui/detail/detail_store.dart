@@ -31,11 +31,11 @@ abstract class _DetailStore with Store {
   @observable
   bool isMuted = false;
 
-  @observable
-  get isPlaying => playerState == PlayerState.playing;
+  @computed
+  bool get isPlaying => playerState == PlayerState.playing;
 
-  @observable
-  get isPaused => playerState == PlayerState.paused;
+  @computed
+  bool get isPaused => playerState == PlayerState.paused;
 
   @computed
   get durationText =>
