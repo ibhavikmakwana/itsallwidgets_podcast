@@ -130,7 +130,7 @@ class PlayerControllerWidget extends StatelessWidget {
                       : IconButton(
                           onPressed: store!.isPlaying
                               ? () => store!.pause()
-                              : () => store!.play(item!.guid),
+                              : () => store!.play(item!.guid!),
                           iconSize: 48,
                           icon: store!.isPlaying
                               ? const Icon(Icons.pause)

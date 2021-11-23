@@ -114,8 +114,8 @@ mixin _$DetailStore on _DetailStore, Store {
   final _$playAsyncAction = AsyncAction('_DetailStore.play');
 
   @override
-  Future play(String? guid) {
-    return _$playAsyncAction.run(() => super.play(guid!));
+  Future play(String guid) {
+    return _$playAsyncAction.run(() => super.play(guid));
   }
 
   final _$pauseAsyncAction = AsyncAction('_DetailStore.pause');

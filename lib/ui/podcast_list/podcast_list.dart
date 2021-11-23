@@ -56,13 +56,6 @@ class _PodCastListState extends State<PodCastList> {
   Future<InitializationStatus> _initGoogleMobileAds() =>
       MobileAds.instance.initialize();
 
-  int _getDestinationItemIndex(int rawIndex) {
-    if (rawIndex >= _kAdIndex && _isAdLoaded) {
-      return rawIndex - 1;
-    }
-    return rawIndex;
-  }
-
   @override
   void dispose() {
     _ad.dispose();
@@ -79,66 +72,70 @@ class _PodCastListState extends State<PodCastList> {
               case Status.LOADING:
                 return Center(child: CircularProgressIndicator());
               case Status.COMPLETED:
-                return SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      TitleWidget(title: store.response?.data?.title),
-                      Container(
-                        color: Colors.blue,
-                        height: 3,
-                        width: 50,
-                        margin:
-                            EdgeInsets.only(left: 16, right: 16, bottom: 16),
-                      ),
-                      AuthorSpanWidget(
-                        authorText: store.response?.data?.author?.name,
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(left: 16, right: 16, bottom: 8),
-                        child: Text(
-                          store.response?.data?.description ?? '',
-                          style: TextStyle(fontSize: 16.0),
-                        ),
-                      ),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          final RssResponse feed = store.response!.data!;
-                          if (_isAdLoaded && index == _kAdIndex) {
-                            return Container(
-                              child: AdWidget(ad: _ad),
-                              width: _ad.size.width.toDouble(),
-                              height: 72.0,
-                              alignment: Alignment.center,
-                            );
-                          } else {
-                            final _index = _getDestinationItemIndex(index);
-                            final Item item =
-                                store.response!.data!.items![_index]!;
-
-                            return ListItemView(
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  CupertinoPageRoute(
-                                    builder: (context) => Provider(
-                                      create: (_) => DetailStore(),
-                                      child: PodCastDetail(item, feed),
-                                    ),
-                                  ),
+                return Column(
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        physics: BouncingScrollPhysics(),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            TitleWidget(title: store.response?.data?.title),
+                            Container(
+                              color: Colors.blue,
+                              height: 3,
+                              width: 50,
+                              margin: EdgeInsets.only(
+                                  left: 16, right: 16, bottom: 16),
+                            ),
+                            AuthorSpanWidget(
+                              authorText: store.response?.data?.author?.name,
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(
+                                  left: 16, right: 16, bottom: 8),
+                              child: Text(
+                                store.response?.data?.description ?? '',
+                                style: TextStyle(fontSize: 16.0),
+                              ),
+                            ),
+                            ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                final RssResponse feed = store.response!.data!;
+                                final Item item =
+                                    store.response!.data!.items![index]!;
+                                return ListItemView(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      CupertinoPageRoute(
+                                        builder: (context) => Provider(
+                                          create: (_) => DetailStore(),
+                                          child: PodCastDetail(item, feed),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  item: item,
+                                  feed: store.response!.data,
                                 );
                               },
-                              item: item,
-                              feed: store.response!.data,
-                            );
-                          }
-                        },
-                        itemCount: store.response?.data?.items?.length ?? 0,
+                              itemCount:
+                                  store.response?.data?.items?.length ?? 0,
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
+                    ),
+                    if (_isAdLoaded)
+                      Container(
+                        child: AdWidget(ad: _ad),
+                        width: _ad.size.width.toDouble(),
+                        height: 72.0,
+                        alignment: Alignment.center,
+                      )
+                  ],
                 );
               case Status.ERROR:
                 return Center(child: Text('${store.response!.message}'));
